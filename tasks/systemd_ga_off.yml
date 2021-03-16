@@ -1,4 +1,4 @@
-
+---
 - name: Stop galaxy if running
   systemd:
     name: galaxy

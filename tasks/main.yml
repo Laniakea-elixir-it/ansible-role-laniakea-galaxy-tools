@@ -1,6 +1,5 @@
 ---
 # tasks file for ansible-role-laniakea-tools
-
 - name: flavor recipe directory creation and download
   import_tasks: flavor_recipe_download.yml
 
@@ -9,4 +8,3 @@
 
 - name: installation of tools and workflows
   import_tasks: tool_wf_install.yml
-

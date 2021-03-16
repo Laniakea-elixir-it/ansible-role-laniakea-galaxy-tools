@@ -1,4 +1,4 @@
-
+---
 #______________________________________
 # We clone here Galaxy-flavor-recipes in {{galaxy_tools_base_dir}}
 
@@ -17,7 +17,8 @@
   file:
     path: '{{ galaxy_tools_base_dir }}'
     state: directory
-  when: not tool_dir_path.stat.exists|bool
+  when: not tool_dir_path.stat.exists
+  become: true
   become_user: root
   become_method: sudo
 
@@ -28,6 +29,7 @@
     version: '{{ galaxy_flavors_recipes_tag }}'
     clone: yes
     force: yes
-  when: not tool_dir_path.stat.exists|bool
+  when: not tool_dir_path.stat.exists
+  become: true
   become_user: root
   become_method: sudo

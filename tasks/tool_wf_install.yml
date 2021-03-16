@@ -12,7 +12,7 @@
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh start 
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ galaxy_run_sh_dir }}"
   ignore_errors: true
 
 - name: Install flavor tools with ephemeris No NGINX running with custom script 
@@ -20,7 +20,7 @@
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ galaxy_run_sh_dir }}"
   with_fileglob: 
     - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
   retries: 3
@@ -34,21 +34,21 @@
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ galaxy_run_sh_dir }}"
   with_fileglob: 
     - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
   retries: 3
   delay: 3
   register: installation
   until: installation.rc == 0
-  when: role_debug == "true" 
+  when: role_debug 
 
 - name: stop galaxy NO NGINX and restart GALAXY with NGINX
   become: true 
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh stop 
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ galaxy_run_sh_dir }}"
   ignore_errors: true
 
 - name: check workflow flavor existence
@@ -62,5 +62,4 @@
   shell: 
     cmd: . "{{ galaxy_virtual_env }}/bin/activate";  galaxy-wait -g http://localhost:80 -v --timeout 120; workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g http://localhost:80 --publish_workflows
     executable: /bin/bash
-  when: workflows.stat.exists == True
-
+  when: workflows.stat.exists
