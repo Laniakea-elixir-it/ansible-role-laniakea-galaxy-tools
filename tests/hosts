@@ -1,4 +1,4 @@
 [galaxyservers]
-localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
+90.147.170.136 ansible_user=centos ansible_python_interpreter=/usr/bin/python2
 
 ## libselinux-python3 needed

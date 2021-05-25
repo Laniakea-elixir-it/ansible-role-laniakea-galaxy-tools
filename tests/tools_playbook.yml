@@ -2,7 +2,7 @@
   become: true
   vars:
     laniakea_galaxy_flavor: "galaxy-testing"
-    galaxy_admin_api_key: "admin_key"
+    galaxy_admin_api_key: "GALAXY_ADMIN_API_KEY"
     role_debug: true
   roles:
     - ansible-role-laniakea-tools

@@ -1,0 +1,18 @@
+
+#______________________________________
+# We install some dependency needed
+
+- name: install ephemeris on virtualenv
+  become: yes
+  become_user: galaxy
+  pip:
+    name:
+      - ephemeris
+    virtualenv: '{{ galaxy_virtual_env }}'
+
+- name: install selinux py3 libraries
+  package: 
+    name: libselinux-python3 
+    state: present
+
+

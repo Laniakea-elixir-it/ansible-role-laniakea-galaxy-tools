@@ -15,14 +15,18 @@
     chdir: "{{ galaxy_run_sh_dir}}"
   ignore_errors: true
 
+- name: register recipe files
+  shell: 'ls {{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
+  register: tools_recipe
+
 - name: Install flavor tools with ephemeris No NGINX running with custom script 
   become: true 
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
     chdir: "{{ galaxy_run_sh_dir}}"
-  with_fileglob: 
-    - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
+  with_items: 
+    - "{{ tools_recipe.stdout_lines}}"
   retries: 3
   delay: 3
   register: installation
@@ -35,8 +39,8 @@
   shell:
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
     chdir: "{{ galaxy_run_sh_dir}}"
-  with_fileglob: 
-    - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
+  with_items: 
+    - "{{ tools_recipe.stdout_lines}}"
   retries: 3
   delay: 3
   register: installation
