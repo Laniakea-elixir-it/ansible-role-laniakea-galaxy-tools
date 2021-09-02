@@ -18,7 +18,7 @@ sudo systemctl stop nginx;
 
 touch $GALAXY_RUNSH_DIR/install_tools_galaxy.yml;
 
-cat <<EOT >> install_tools_galaxy.yml
+cat <<EOT > install_tools_galaxy.yml
 uwsgi:
     http: 127.0.0.1:8080
     buffer-size: 16384
