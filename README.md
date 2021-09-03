@@ -21,21 +21,27 @@ Role Variables
  
 - ``galaxy_flavors_recipes_tag:`` repository branch name (default ``test``)
  
-- ``galaxy_admin_api_key:`` galaxy istance admin api_key (default:``"{{ GALAXY_ADMIN_API_KEY }}"``)
- 
 - ``galaxy_tools_base_dir:`` directory used to store galaxy flavors recipes (default: ``/data``)
  
 - ``galaxy_flavors_recipes_dir:``  directory to clone the repo in (default: ``'{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'``)
  
 - ``laniakea_galaxy_flavor:`` galaxy-testing galaxy flavor to install (default: ``galaxy-testing``)
  
-- ``galaxy_run_sh_dir:``  galaxy dir that contain run.sh script (default: ``/home/galaxy/galaxy/server``)
+- ``laniakea_galaxy_server_dir:``  galaxy dir that contain run.sh script (default: ``/home/galaxy/galaxy/server``)
  
-- ``galaxy_virtual_env:`` path to galaxy virtualenv (default: ``/home/galaxy/galaxy/venv``)
- 
-- ``galaxy_config_file:``  path to galaxy config file (default:``/home/galaxy/galaxy/config/galaxy.yml``)
+- ``laniakea_galaxy_venv_dir:`` path to galaxy virtualenv (default: ``/home/galaxy/galaxy/venv``) 
+
+- ``laniakea_galaxy_config_file:``  path to galaxy config file (default:``/home/galaxy/galaxy/config/galaxy.yml``)
  
 - ``role_debug:`` bool debug variable (default: ``false``)
+
+- ``create_galaxy_admin:`` (default:`` true``)
+
+- ``GALAXY_ADMIN_USERNAME:`` (default:``admin``)
+
+- ``GALAXY_ADMIN_PASSWORD:`` (default:``galaxy_admin_password``)
+
+- ``GALAXY_ADMIN_API_KEY:`` galaxy istance admin api_key (default:``GALAXY_ADMIN_API_KEY``)
 
 
 Dependencies
