@@ -3,10 +3,10 @@
 #stop galaxy and nginx in the laniakea installation
 #vars
 export PORT=8080
-export GALAXY_RUNSH_DIR="{{ galaxy_run_sh_dir }}"
-export GALAXY_ACTUAL_CONFIG_FILE="{{ galaxy_config_file }}"
-export GALAXY_CONFIG_FILE="{{ galaxy_run_sh_dir }}/install_tools_galaxy.yml"
-export GALAXY_VIRTUAL_ENV="{{ galaxy_virtual_env }}"
+export GALAXY_RUNSH_DIR="{{ laniakea_galaxy_server_dir }}"
+export GALAXY_ACTUAL_CONFIG_FILE="{{ laniakea_galaxy_config_file }}"
+export GALAXY_CONFIG_FILE="{{ laniakea_galaxy_server_dir }}/install_tools_galaxy.yml"
+export GALAXY_VIRTUAL_ENV="{{ laniakea_galaxy_venv_dir }}"
 export DB_VERSION=10
 export GALAXY_PID="/home/galaxy/galaxy/server/laniakea.pid"
 export GALAXY_LOG="/home/galaxy/galaxy/server/laniakea.log"

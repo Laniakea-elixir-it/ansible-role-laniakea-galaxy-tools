@@ -11,11 +11,34 @@ galaxy_flavors_recipes_dir: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'
 #repos branch
 galaxy_flavors_recipes_tag: 'test'
 
+#galaxy_user
+laniakea_galaxy_user: {name: galaxy, shell: /bin/bash, uid: 5001}
+
+#______________________________________
+## Galaxy administrator
+#
+## Enable Galaxy administrator user creation.
+create_galaxy_admin: true
+#
+## Galaxy administrator username
+GALAXY_ADMIN_USERNAME: "admin"
+#
+## Galaxy administrator password.
+## It is hard coded. To be changed by the administrator.
+GALAXY_ADMIN_PASSWORD: "galaxy_admin_password"
+#
+## Galaxy administrator API_KEY. https://wiki.galaxyproject.org/Admin/API
+## Please note that this key acts as an alternate means to access your account, and should be treated with the same care as your login password. To be changed by the administrator.
+GALAXY_ADMIN_API_KEY: "GALAXY_ADMIN_API_KEY"
+#
+## Galaxy administrator e-mail address
+GALAXY_ADMIN_EMAIL: "admin@server.com"
+
 #______________________________________________
 # Galaxy administrator API_KEY. https://wiki.galaxyproject.org/Admin/API
 # Please note that this key acts as an alternate means to access your account, and should be treated with the same care as your login password. To be changed by the administrator.
 
-galaxy_admin_api_key: "{{ GALAXY_ADMIN_API_KEY }}"
+#galaxy_admin_api_key: "{{ GALAXY_ADMIN_API_KEY }}"
 
 #directory used to store galaxy flavors recipes
 galaxy_tools_base_dir: /data
@@ -24,13 +47,17 @@ galaxy_tools_base_dir: /data
 laniakea_galaxy_flavor: galaxy-testing
 
 #galaxy dir that contain run.sh script
-galaxy_run_sh_dir: /home/galaxy/galaxy/server 
+#galaxy_run_sh_dir: /home/galaxy/galaxy/server 
+laniakea_galaxy_server_dir:  /home/galaxy/galaxy/server 
 
 #path to galaxy virtualenv
-galaxy_virtual_env: /home/galaxy/galaxy/venv
+laniakea_galaxy_venv_dir: /home/galaxy/galaxy/venv
+#galaxy_virtual_env: /home/galaxy/galaxy/venv
 
 #path to galaxy config file
-galaxy_config_file: /home/galaxy/galaxy/config/galaxy.yml
+#galaxy_config_file: /home/galaxy/galaxy/config/galaxy.yml
+laniakea_galaxy_config_file: /home/galaxy/galaxy/config/galaxy.yml
 
 #debug variable
 role_debug: false
+

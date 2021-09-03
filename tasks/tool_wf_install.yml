@@ -3,7 +3,7 @@
 - name: Template a file to /etc/file.conf
   template:
     src: laniakea_install_tools.sh.j2
-    dest: "{{ galaxy_run_sh_dir }}/laniakea_install_tools.sh"
+    dest: "{{ laniakea_galaxy_server_dir }}/laniakea_install_tools.sh"
     owner: galaxy
     group: galaxy
 
@@ -12,15 +12,15 @@
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh start 
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ laniakea_galaxy_server_dir}}"
   ignore_errors: true
 
 - name: Install flavor tools with ephemeris No NGINX running with custom script 
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
-    chdir: "{{ galaxy_run_sh_dir}}"
+    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item }}"
+    chdir: "{{ laniakea_galaxy_server_dir}}"
   with_fileglob: 
     - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
   retries: 3
@@ -33,8 +33,8 @@
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item }}"
-    chdir: "{{ galaxy_run_sh_dir}}"
+    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item }}"
+    chdir: "{{ laniakea_galaxy_server_dir}}"
   with_fileglob: 
     - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
   retries: 3
@@ -48,7 +48,7 @@
   become_user: galaxy 
   shell:
     cmd: bash laniakea_install_tools.sh stop 
-    chdir: "{{ galaxy_run_sh_dir}}"
+    chdir: "{{ laniakea_galaxy_server_dir}}"
   ignore_errors: true
 
 - name: check workflow flavor existence
@@ -60,7 +60,7 @@
   become: true
   become_user: galaxy
   shell: 
-    cmd: . "{{ galaxy_virtual_env }}/bin/activate";  galaxy-wait -g http://localhost:80 -v --timeout 120; workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g http://localhost:80 --publish_workflows
+    cmd: . "{{ laniakea_galaxy_venv_dir }}/bin/activate";  galaxy-wait -g http://localhost:80 -v --timeout 120; workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g http://localhost:80 --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
 

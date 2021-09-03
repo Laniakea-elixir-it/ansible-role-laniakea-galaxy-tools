@@ -1,0 +1,15 @@
+---
+- name: 'install libselinux and python3-psycopg2 needfor search API_KEY'
+  command:
+    cmd: yum install -y python3-psycopg2 libselinux-python3
+
+- name: 'Disable SELinux'
+  selinux:
+    state: disabled
+
+- name: 'User rules for {{ laniakea_galaxy_user.name }} to allow no passwd for sudo'
+  lineinfile:
+    dest: '/etc/sudoers'
+    state: present
+    line: '{{ laniakea_galaxy_user.name }} ALL=(ALL) NOPASSWD:ALL'
+    insertafter: EOF

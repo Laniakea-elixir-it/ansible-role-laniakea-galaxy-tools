@@ -8,7 +8,7 @@
   pip:
     name:
       - ephemeris
-    virtualenv: '{{ galaxy_virtual_env }}' 
+    virtualenv: '{{ laniakea_galaxy_venv_dir }}' 
 
 - name: 'Check if {{ galaxy_tools_base_dir }} exist'
   stat:
