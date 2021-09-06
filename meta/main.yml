@@ -14,5 +14,6 @@ galaxy_info:
     - Galaxy
     - Bioinformatics
 dependencies: 
-  - ansible-role-laniakea-galaxy  
+
+#  - ansible-role-laniakea-galaxy  
   

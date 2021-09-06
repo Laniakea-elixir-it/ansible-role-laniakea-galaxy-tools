@@ -15,14 +15,19 @@
     chdir: "{{ laniakea_galaxy_server_dir}}"
   ignore_errors: true
 
+- name: get tool list name on remote
+  find:
+    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/'
+    patterns: "*.yml"
+  register: flavor_tool_lists
+
 - name: Install flavor tools with ephemeris No NGINX running with custom script 
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item }}"
+    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
-  with_fileglob: 
-    - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
+  with_items: "{{ flavor_tool_lists.files }}"
   retries: 3
   delay: 3
   register: installation
@@ -33,10 +38,9 @@
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item }}"
+    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
-  with_fileglob: 
-    - '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/*.yml'
+  with_items: "{{ flavor_tool_lists.files }}"
   retries: 3
   delay: 3
   register: installation
