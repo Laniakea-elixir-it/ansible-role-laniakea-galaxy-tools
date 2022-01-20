@@ -2,6 +2,7 @@ galaxy_info:
   author: Pietro Mandreoli
   description: role to install Laniakea flavors on Galaxy instance
   company: Unimi
+  role_name: galaxy_tools
   license: MIT
   min_ansible_version: 2.9
   platforms:
