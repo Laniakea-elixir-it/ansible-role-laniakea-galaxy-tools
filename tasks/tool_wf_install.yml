@@ -33,7 +33,7 @@
   delay: 3
   register: installation
   until: installation.rc == 0
-  when: not role_debug|bool
+  when: not role_debug
 
 - name: '[DEBUG] Install flavor tools with ephemeris running with custom script'
   become: true 
@@ -46,7 +46,7 @@
   delay: 3
   register: installation
   until: installation.rc == 0
-  when: role_debug|bool
+  when: role_debug | bool
 
 - name: stop galaxy NO NGINX and restart GALAXY with NGINX
   become: true 
