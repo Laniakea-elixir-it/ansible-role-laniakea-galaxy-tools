@@ -41,7 +41,7 @@ Role Variables
 
 - ``GALAXY_ADMIN_PASSWORD:`` (default:``galaxy_admin_password``)
 
-- ``GALAXY_ADMIN_API_KEY:`` galaxy istance admin api_key (default:``GALAXY_ADMIN_API_KEY``)
+- ``galaxy_admin_api_key:`` galaxy istance admin api_key (default:``GALAXY_ADMIN_API_KEY``)
 
 
 Dependencies

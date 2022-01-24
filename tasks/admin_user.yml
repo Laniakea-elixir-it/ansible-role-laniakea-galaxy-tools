@@ -6,7 +6,7 @@
   postgresql_query:
     db: galaxy
     login_user: postgres
-    query: SELECT exists (SELECT key FROM api_keys WHERE '"{{ GALAXY_ADMIN_API_KEY }}"' LIKE '%' || key || '%');
+    query: SELECT exists (SELECT key FROM api_keys WHERE '"{{ galaxy_admin_api_key }}"' LIKE '%' || key || '%');
   register: result
   ignore_errors: yes  
 
@@ -26,7 +26,7 @@
           -u {{ GALAXY_ADMIN_USERNAME }}
           -e {{ GALAXY_ADMIN_EMAIL }}
           -p {{ GALAXY_ADMIN_PASSWORD }}
-          -a {{ GALAXY_ADMIN_API_KEY }}'
+          -a {{ galaxy_admin_api_key }}'
     chdir: "{{ laniakea_galaxy_server_dir }}"
   when: result.failed or not result.query_result[0].exists
 

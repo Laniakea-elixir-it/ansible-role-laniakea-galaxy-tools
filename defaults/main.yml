@@ -2,62 +2,57 @@
 #______________________________________________
 # defaults file for ansible-role-laniakea-tools
 
-#github repository containing flavor recipes
-galaxy_flavors_recipes_url: 'https://github.com/pmandreoli/Galaxy-flavors-recipes.git'
+# Github repository containing flavor recipes
+#galaxy_flavors_recipes_url: 'https://github.com/pmandreoli/Galaxy-flavors-recipes.git'
+galaxy_flavors_recipes_url: 'https://github.com/Laniakea-elixir-it/Galaxy-flavours.git'
 
-#directory to clone it in
+# Directory to clone it in
 galaxy_flavors_recipes_dir: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'
 
-#repos branch
+# Repos branch
 galaxy_flavors_recipes_tag: 'test'
 
-#galaxy_user
+# Laniakea galaxy flavor
+laniakea_galaxy_flavor: galaxy-testing
+
+# Galaxy user
 laniakea_galaxy_user: {name: galaxy, shell: /bin/bash, uid: 5001}
 
 #______________________________________
-## Galaxy administrator
-#
-## Enable Galaxy administrator user creation.
-create_galaxy_admin: true
-#
-## Galaxy administrator username
-GALAXY_ADMIN_USERNAME: "admin"
-#
-## Galaxy administrator password.
-## It is hard coded. To be changed by the administrator.
-GALAXY_ADMIN_PASSWORD: "galaxy_admin_password"
-#
-## Galaxy administrator API_KEY. https://wiki.galaxyproject.org/Admin/API
-## Please note that this key acts as an alternate means to access your account, and should be treated with the same care as your login password. To be changed by the administrator.
-GALAXY_ADMIN_API_KEY: "GALAXY_ADMIN_API_KEY"
-#
-## Galaxy administrator e-mail address
-GALAXY_ADMIN_EMAIL: "admin@server.com"
+# Galaxy administrator
 
-#______________________________________________
+# Enable Galaxy administrator user creation.
+create_galaxy_admin: true
+
+# Galaxy administrator username
+GALAXY_ADMIN_USERNAME: "admin"
+
+# Galaxy administrator password.
+# It is hard coded. To be changed by the administrator.
+GALAXY_ADMIN_PASSWORD: "galaxy_admin_password"
+
 # Galaxy administrator API_KEY. https://wiki.galaxyproject.org/Admin/API
 # Please note that this key acts as an alternate means to access your account, and should be treated with the same care as your login password. To be changed by the administrator.
+#GALAXY_ADMIN_API_KEY: "GALAXY_ADMIN_API_KEY"
+galaxy_admin_api_key: "GALAXY_ADMIN_API_KEY"
 
-#galaxy_admin_api_key: "{{ GALAXY_ADMIN_API_KEY }}"
+# Galaxy administrator e-mail address
+GALAXY_ADMIN_EMAIL: "admin@server.com"
 
-#directory used to store galaxy flavors recipes
+#______________________________________
+# Galaxy path
+
+# Directory used to store galaxy flavors recipes
 galaxy_tools_base_dir: /data
 
-#laniakea galaxy flavor
-laniakea_galaxy_flavor: galaxy-testing
-
-#galaxy dir that contain run.sh script
-#galaxy_run_sh_dir: /home/galaxy/galaxy/server 
+# Galaxy dir that contain run.sh script
 laniakea_galaxy_server_dir:  /home/galaxy/galaxy/server 
 
-#path to galaxy virtualenv
+# Path to galaxy virtualenv
 laniakea_galaxy_venv_dir: /home/galaxy/galaxy/venv
-#galaxy_virtual_env: /home/galaxy/galaxy/venv
 
-#path to galaxy config file
-#galaxy_config_file: /home/galaxy/galaxy/config/galaxy.yml
+# Path to galaxy config file
 laniakea_galaxy_config_file: /home/galaxy/galaxy/config/galaxy.yml
 
-#debug variable
+# Debug variable
 role_debug: false
-

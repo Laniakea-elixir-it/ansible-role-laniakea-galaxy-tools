@@ -25,7 +25,7 @@
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item.path }}"
+    cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
   with_items: "{{ flavor_tool_lists.files }}"
   ignore_errors: true
@@ -35,7 +35,7 @@
   become: true 
   become_user: galaxy 
   shell:
-    cmd: bash laniakea_install_tools.sh install "{{ GALAXY_ADMIN_API_KEY }}"  "{{ item.path }}"
+    cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
   with_items: "{{ flavor_tool_lists.files }}"
   when: role_debug|bool
@@ -60,7 +60,7 @@
     cmd: |
       . "{{ laniakea_galaxy_venv_dir }}/bin/activate";
       galaxy-wait -g http://localhost/galaxy/ -v --timeout 120;
-      workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g http://localhost/galaxy/ --publish_workflows
+      workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g http://localhost/galaxy/ --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
 
