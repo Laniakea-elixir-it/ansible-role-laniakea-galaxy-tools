@@ -57,7 +57,10 @@
   become: true
   become_user: galaxy
   shell: 
-    cmd: . "{{ laniakea_galaxy_venv_dir }}/bin/activate";  galaxy-wait -g http://localhost:80 -v --timeout 120; workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g http://localhost:80 --publish_workflows
+    cmd: |
+      . "{{ laniakea_galaxy_venv_dir }}/bin/activate";
+      galaxy-wait -g http://localhost/galaxy/ -v --timeout 120;
+      workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g http://localhost/galaxy/ --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
 
