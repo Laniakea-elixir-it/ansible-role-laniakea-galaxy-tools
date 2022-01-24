@@ -13,7 +13,8 @@ galaxy_flavors_recipes_dir: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'
 galaxy_flavors_recipes_tag: 'test'
 
 # Laniakea galaxy flavor
-laniakea_galaxy_flavor: galaxy-testing
+#laniakea_galaxy_flavor: galaxy-testing
+galaxy_flavor: galaxy-minimal
 
 # Galaxy user
 laniakea_galaxy_user: {name: galaxy, shell: /bin/bash, uid: 5001}

@@ -17,7 +17,7 @@
 
 - name: get tool list name on remote
   find:
-    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/'
+    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ galaxy_flavor }}/'
     patterns: "*.yml"
   register: flavor_tool_lists
 
@@ -58,7 +58,7 @@
 
 - name: check workflow flavor existence
   stat:
-    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ laniakea_galaxy_flavor }}/workflows'
+    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ galaxy_flavor }}/workflows'
   register: workflows 
 
 - name: Install workflows on GALAXY

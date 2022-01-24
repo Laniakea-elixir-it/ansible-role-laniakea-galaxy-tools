@@ -25,7 +25,7 @@ Role Variables
  
 - ``galaxy_flavors_recipes_dir:``  directory to clone the repo in (default: ``'{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'``)
  
-- ``laniakea_galaxy_flavor:`` galaxy-testing galaxy flavor to install (default: ``galaxy-testing``)
+- ``galaxy_flavor:`` galaxy-testing galaxy flavor to install (default: ``galaxy-minimal``)
  
 - ``laniakea_galaxy_server_dir:``  galaxy dir that contain run.sh script (default: ``/home/galaxy/galaxy/server``)
  
@@ -59,7 +59,7 @@ Example Playbook
 - hosts: galaxyservers
   become: true
   vars:
-    laniakea_galaxy_flavor: "galaxy-testing"
+    galaxy_flavor: "galaxy-testing"
     galaxy_admin_api_key: "admin_key"
     role_debug: true
   roles:
