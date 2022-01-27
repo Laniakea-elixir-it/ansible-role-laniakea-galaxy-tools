@@ -18,7 +18,7 @@
 - name: get tool list name on remote
   find:
     path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ galaxy_flavor }}/'
-    patterns: "*.yml"
+    patterns: "*.yml,*.yaml"
   register: flavor_tool_lists
 
 - name: Install flavor tools with ephemeris running with custom script 
@@ -28,11 +28,11 @@
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
   with_items: "{{ flavor_tool_lists.files }}"
-  ignore_errors: true
   retries: 3
   delay: 3
   register: installation
   until: installation.rc == 0
+  ignore_errors: true
   when: not role_debug
 
 - name: '[DEBUG] Install flavor tools with ephemeris running with custom script'
@@ -46,7 +46,7 @@
   delay: 3
   register: installation
   until: installation.rc == 0
-  when: role_debug | bool
+  when: role_debug
 
 - name: stop galaxy NO NGINX and restart GALAXY with NGINX
   become: true 
