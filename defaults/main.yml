@@ -19,6 +19,9 @@ galaxy_flavor: galaxy-minimal
 # Galaxy user
 laniakea_galaxy_user: {name: galaxy, shell: /bin/bash, uid: 5001}
 
+# Galaxy nginx prefix
+galaxy_prefix: "/galaxy/" 
+
 #______________________________________
 # Galaxy administrator
 

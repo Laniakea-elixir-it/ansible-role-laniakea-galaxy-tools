@@ -67,8 +67,8 @@
   shell: 
     cmd: |
       . "{{ laniakea_galaxy_venv_dir }}/bin/activate";
-      galaxy-wait -g http://localhost/galaxy/ -v --timeout 120;
-      workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g http://localhost/galaxy/ --publish_workflows
+      galaxy-wait -g "http://localhost{{ galaxy_prefix }}" -v --timeout 120;
+      workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g "http://localhost{{ galaxy_prefix }}" --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
 
