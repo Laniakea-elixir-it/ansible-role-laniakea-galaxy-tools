@@ -10,6 +10,7 @@ export GALAXY_VIRTUAL_ENV="{{ laniakea_galaxy_venv_dir }}"
 export DB_VERSION=10
 export GALAXY_PID="/home/galaxy/galaxy/server/laniakea.pid"
 export GALAXY_LOG="/home/galaxy/galaxy/server/laniakea.log"
+export GALAXY_TOOL_DEPS_DIR="/export/tool_deps"
 
 
 start_galaxy () {
@@ -52,7 +53,9 @@ else
 	sudo systemctl start postgresql-$DB_VERSION;
 fi
 
+#remove conda.lock file if present
 
+rm -f -- $GALAXY_TOOL_DEPS_DIR/conda.lock
 
 #start galaxy
 echo "starting galaxy";
