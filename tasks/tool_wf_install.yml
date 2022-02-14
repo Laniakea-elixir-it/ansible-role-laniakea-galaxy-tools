@@ -42,7 +42,7 @@
     cmd: bash laniakea_install_tools.sh install "{{ galaxy_admin_api_key }}"  "{{ item.path }}"
     chdir: "{{ laniakea_galaxy_server_dir}}"
   with_items: "{{ flavor_tool_lists.files }}"
-  retries: 3
+  retries: 4
   delay: 3
   register: installation
   until: installation.rc == 0
