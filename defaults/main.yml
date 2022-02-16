@@ -10,7 +10,7 @@ galaxy_flavors_recipes_url: 'https://github.com/Laniakea-elixir-it/Galaxy-flavou
 galaxy_flavors_recipes_dir: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'
 
 # Repos branch
-galaxy_flavors_recipes_tag: 'test'
+galaxy_flavors_recipes_tag: 'master'
 
 # Laniakea galaxy flavor
 #laniakea_galaxy_flavor: galaxy-testing
