@@ -21,7 +21,7 @@ Role Variables
  
 - ``galaxy_flavors_recipes_tag:`` repository branch name (default ``test``)
  
-- ``galaxy_tools_base_dir:`` directory used to store galaxy flavors recipes (default: ``/data``)
+- ``galaxy_tools_base_dir:`` directory used to store galaxy flavors recipes (default: ``/home/galaxy/galaxy``)
  
 - ``galaxy_flavors_recipes_dir:``  directory to clone the repo in (default: ``'{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'``)
  
