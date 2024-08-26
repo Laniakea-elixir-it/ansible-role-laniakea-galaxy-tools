@@ -20,8 +20,7 @@
     path: '{{ galaxy_tools_base_dir }}'
     state: directory
   when: not tool_dir_path.stat.exists|bool
-  become_user: root
-  become_method: sudo
+  become_user: galaxy
 
 - name: Get Galaxy Lanikea flavor recipes
   git:
@@ -31,5 +30,4 @@
     clone: yes
     force: yes
   when: not tool_dir_path.stat.exists|bool
-  become_user: root
-  become_method: sudo
+  become_user: galaxy
