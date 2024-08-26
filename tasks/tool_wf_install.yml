@@ -7,14 +7,6 @@
     owner: galaxy
     group: galaxy
 
-- name: start galaxy No NGINX
-  become: true 
-  become_user: galaxy 
-  shell:
-    cmd: bash laniakea_install_tools.sh start 
-    chdir: "{{ laniakea_galaxy_server_dir}}"
-  ignore_errors: true
-
 - name: get tool list name on remote
   find:
     path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes/{{ galaxy_flavor }}/'
@@ -48,13 +40,6 @@
   until: installation.rc == 0
   when: role_debug
 
-- name: stop galaxy NO NGINX and restart GALAXY with NGINX
-  become: true 
-  become_user: galaxy 
-  shell:
-    cmd: bash laniakea_install_tools.sh stop 
-    chdir: "{{ laniakea_galaxy_server_dir}}"
-  ignore_errors: true
 
 - name: check workflow flavor existence
   stat:
@@ -67,8 +52,8 @@
   shell: 
     cmd: |
       . "{{ laniakea_galaxy_venv_dir }}/bin/activate";
-      galaxy-wait -g "http://localhost{{ galaxy_prefix }}" -v --timeout 120;
-      workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g "http://localhost{{ galaxy_prefix }}" --publish_workflows
+      galaxy-wait -g "http://localhost/galaxy" -v --timeout 120;
+      workflow-install -a "{{ galaxy_admin_api_key }}" -w '{{ workflows.stat.path }}/' -g "http://localhost/galaxy/" --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
 
