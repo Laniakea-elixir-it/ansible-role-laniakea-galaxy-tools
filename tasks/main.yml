@@ -10,9 +10,6 @@
 - name: flavor recipe directory creation and download
   import_tasks: flavor_recipe_download.yml
 
-- name: systemd galaxy turn off
-  import_tasks: systemd_ga_off.yml
-
 - name: installation of tools and workflows
   import_tasks: tool_wf_install.yml
 
