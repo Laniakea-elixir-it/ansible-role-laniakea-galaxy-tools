@@ -1,18 +1,16 @@
-
-#______________________________________
-# We clone here Galaxy-flavor-recipes in {{galaxy_tools_base_dir}}
-
+---
 - name: install ephemeris on virtualenv
   become: true
   become_user: galaxy
   pip:
     name:
       - ephemeris
+      - bioblend
     virtualenv: '{{ laniakea_galaxy_venv_dir }}' 
 
 - name: 'Check if {{ galaxy_tools_base_dir }} exist'
   stat:
-    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'
+    path: '{{ galaxy_tools_base_dir }}/Galaxy-flavours'
   register: tool_dir_path
 
 - name: 'Create {{ galaxy_tools_base_dir }}'
@@ -23,11 +21,11 @@
   become_user: root
   become_method: sudo
 
-- name: Get Galaxy Lanikea flavor recipes
+- name: Get Galaxy flavor
   git:
-    repo: '{{ galaxy_flavors_recipes_url }}'
-    dest: '{{ galaxy_flavors_recipes_dir }}'
-    version: '{{ galaxy_flavors_recipes_tag }}'
+    repo: '{{ galaxy_flavors_url }}'
+    dest: '{{ galaxy_flavors_dir }}'
+    version: '{{ galaxy_flavors_tag }}'
     clone: yes
     force: yes
   when: not tool_dir_path.stat.exists|bool

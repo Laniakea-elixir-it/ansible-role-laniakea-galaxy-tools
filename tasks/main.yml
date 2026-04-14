@@ -1,18 +1,15 @@
 ---
-# tasks file for ansible-role-laniakea-tools
-
-- name: check if selinux is installed and add root priviledges to galaxy
-  import_tasks: pre_tasks.yml
 
 - name: create admin user
-  import_tasks: admin_user.yml
+  import_tasks: create_bootstrap_user.yml
 
-- name: flavor recipe directory creation and download
-  import_tasks: flavor_recipe_download.yml
+- name: Flavor download
+  import_tasks: get_flavor.yml
 
-- name: systemd galaxy turn off
-  import_tasks: systemd_ga_off.yml
+- name: Install tools
+  import_tasks: tools.yml
+  listen: "restart galaxy"
 
-- name: installation of tools and workflows
-  import_tasks: tool_wf_install.yml
-
+- name: Install workflows
+  import_tasks: workflows.yml
+  listen: "restart galaxy"

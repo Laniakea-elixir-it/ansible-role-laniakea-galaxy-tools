@@ -1,0 +1,82 @@
+---
+#
+# If this is a live deployment GALAXY_ADMIN_API_KEY is set son no admin is created.
+# If this is a flavor build deployment GALAXY_ADMIN_API_KEY is not set. So a bootstrap user is created and
+# finally discharged.
+#
+
+- name: Query database for user API_KEY 
+  become: true
+  become_user: postgres
+  postgresql_query:
+    db: galaxy
+    login_user: postgres
+    query: SELECT exists (SELECT key FROM api_keys WHERE '"{{ GALAXY_ADMIN_API_KEY }}"' LIKE '%' || key || '%');
+  register: result
+  ignore_errors: yes
+
+- name: Check query output
+  debug:
+    msg: '{{ result }}'
+
+- name: Check query output if failed
+  debug:
+    msg: '{{result.failed }}'
+
+- 
+  debug:
+    msg: '{{ result.query_result[0].exists }}'
+
+#
+### Create Galaxy bootstrap user
+#
+
+- name: Download user creation script 
+  get_url:
+    url: https://raw.githubusercontent.com/Laniakea-elixir-it/Scripts/refs/heads/master/galaxy_tools/py3_manage_bootstrap_user.py 
+    dest: "{{ laniakea_galaxy_server_dir }}/manage_bootstrap_user.py"
+  when: result.failed or not result.query_result[0].exists
+
+- name: Create galaxy user with API_KEY to install tools
+  become: true
+  become_user: galaxy
+  shell:
+    cmd: '. {{ laniakea_galaxy_venv_dir }}/bin/activate; 
+          python3 manage_bootstrap_user.py
+          -c {{ laniakea_galaxy_config_file }} create
+          -u {{ galaxy_bootstrap_user }}
+          -e {{ galaxy_bootstrap_email }}
+          -p {{ galaxy_bootstrap_password }}
+          -a {{ GALAXY_ADMIN_API_KEY }}'
+    chdir: "{{ laniakea_galaxy_server_dir }}"
+  when: result.failed or not result.query_result[0].exists
+
+- name: Backup galaxy.yml
+  ansible.builtin.copy:
+    src: '{{ laniakea_galaxy_config_file }}'
+    dest: '{{ laniakea_galaxy_config_dir }}/galaxy_bootstrap.yml'
+    owner: '{{ laniakea_galaxy_user.name }}' 
+    group: '{{ laniakea_galaxy_user.name }}'
+    mode: '0640'
+    force: false
+    remote_src: true #false on production
+  when: result.failed or not result.query_result[0].exists
+
+- name: Add bootstrap user to galaxy.yml admin_users
+  replace:
+    path: '{{ laniakea_galaxy_config_dir }}/galaxy_bootstrap.yml'
+    regexp: '(\s+admin_users:).*'
+    replace: '\1 {{ galaxy_bootstrap_email }}'
+  when: result.failed or not result.query_result[0].exists
+
+- name: Restart galaxy
+  command: "{{ laniakea_galaxy_venv_dir }}/bin/galaxyctl -c {{ laniakea_galaxy_config_dir }}/galaxy_bootstrap.yml restart"
+  become_user: root
+  become_method: sudo
+  when: result.failed or not result.query_result[0].exists
+
+- name: "Wait Galaxy"
+  wait_for:
+    host: 127.0.0.1
+    port: "4001"
+    timeout: 300

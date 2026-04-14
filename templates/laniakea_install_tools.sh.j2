@@ -1,101 +1,16 @@
 #!/bin/bash
-#assure postgres is running
-#stop galaxy and nginx in the laniakea installation
+
 #vars
-export PORT=8080
-export GALAXY_RUNSH_DIR="{{ laniakea_galaxy_server_dir }}"
-export GALAXY_ACTUAL_CONFIG_FILE="{{ laniakea_galaxy_config_file }}"
-export GALAXY_CONFIG_FILE="{{ laniakea_galaxy_server_dir }}/install_tools_galaxy.yml"
-export GALAXY_VIRTUAL_ENV="{{ laniakea_galaxy_venv_dir }}"
-export DB_VERSION=10
-export GALAXY_PID="/home/galaxy/galaxy/server/laniakea.pid"
-export GALAXY_LOG="/home/galaxy/galaxy/server/laniakea.log"
+export PORT=80
+export GALAXY_URL_PREFIX=/galaxy
 export GALAXY_TOOL_DEPS_DIR="/export/tool_deps"
+export TOOLS_VENV={{ laniakea_galaxy_venv_dir }}
 
-
-start_galaxy () {
-sudo systemctl stop galaxy;
-sudo systemctl stop nginx;
-
-touch $GALAXY_RUNSH_DIR/install_tools_galaxy.yml;
-
-cat <<EOT > install_tools_galaxy.yml
-uwsgi:
-    http: 127.0.0.1:8080
-    buffer-size: 16384
-    processes: 1
-    threads: 4
-    offload-threads: 2
-    static-map: /static=static
-    static-map: /favicon.ico=static/favicon.ico
-    static-safe: client/galaxy/images
-    master: false
-    virtualenv: /home/galaxy/galaxy/venv
-    pythonpath: lib
-    module: galaxy.webapps.galaxy.buildapp:uwsgi_app()
-    manage-script-name: false
-    thunder-lock: false
-    die-on-term: true
-    hook-master-start: unix_signal:2 gracefully_kill_them_all
-    hook-master-start: unix_signal:15 gracefully_kill_them_all
-    py-call-osafterfork: true
-    enable-threads: true
-    umask: 027
-EOT
-awk '/galaxy:/,0' $GALAXY_ACTUAL_CONFIG_FILE >> $GALAXY_RUNSH_DIR/install_tools_galaxy.yml;
- echo "the config file has been created";
-
-#activatgalaxy  env
-if [[ $(pgrep -u postgres -fa -- -D | wc -l) == 1 ]];then
-	echo "database is running procede with the process";
-else
-	echo "database not started yet, start it";
-	sudo systemctl start postgresql-$DB_VERSION;
-fi
-
-#remove conda.lock file if present
-
+# Remove conda.lock file if present
 rm -f -- $GALAXY_TOOL_DEPS_DIR/conda.lock
 
-#start galaxy
-echo "starting galaxy";
-$GALAXY_RUNSH_DIR/run.sh start;
-}
-install_tools () {
-. $GALAXY_VIRTUAL_ENV/bin/activate;
-galaxy-wait -g http://localhost:$PORT -v --timeout 120 && 
-	#activate virtual env
+# Install tools
+. $TOOLS_VENV/bin/activate;
 
-shed-tools install -g http://localhost:$PORT -a $2 -t $3 --log_file install_tools.log;
-
-}
-
-#TODO control exit code for tools installation
-#exit_code=$?
-
-#if [ $exit_code != 0 ]; then
-#echo "installation failed, Galaxy server log:";
-#cat galaxy.log
-#else
-#echo "installation completed"
-#exit $exit_code
-#fi
-
-stop_galaxy () {
-echo  "stopping galaxy";
-$GALAXY_RUNSH_DIR/run.sh stop;
-#kill -9 `cat $GALAXY_PID`;
-#remove config file pid and log file
-rm $GALAXY_PID $GALAXY_LOG;
-sudo systemctl start galaxy;
-sudo systemctl start nginx;
-
-}
-
-if [ $1 == "start" ]; then 
-start_galaxy 
-elif [ $1 == "install" ]; then
-install_tools $1 $2 $3
-elif [ $1 == "stop" ]; then
-stop_galaxy
-fi
+galaxy-wait -g http://localhost:$PORT$GALAXY_URL_PREFIX -v --timeout 120 && 
+shed-tools install -g http://localhost:$PORT$GALAXY_URL_PREFIX -a $1 -t $2 --log_file /tmp/install_tools.log;

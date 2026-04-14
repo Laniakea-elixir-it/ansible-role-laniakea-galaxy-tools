@@ -1,0 +1,18 @@
+---
+# Workflows are in "workflows" directory of the flavor
+
+- name: Check workflow flavor existence
+  stat:
+    path: '{{ galaxy_flavors_dir }}/{{ galaxy_flavor }}/workflows'
+  register: workflows 
+
+- name: Install workflows on GALAXY
+  become: true
+  become_user: galaxy
+  shell: 
+    cmd: |
+      . "{{ laniakea_galaxy_venv_dir }}/bin/activate";
+      galaxy-wait -g "http://localhost:{{ galaxy_port }}{{ galaxy_prefix }}" -v --timeout 120;
+      workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g "http://localhost{{ galaxy_prefix }}" --publish_workflows
+    executable: /bin/bash
+  when: workflows.stat.exists == True

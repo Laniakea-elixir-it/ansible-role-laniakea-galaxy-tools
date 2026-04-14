@@ -17,13 +17,13 @@ python3 pip3 libselinux-python3
 Role Variables
 --------------
 
-- ``galaxy_flavors_recipes_url:``github repository containing flavor recipes (default: ``https://github.com/pmandreoli/Galaxy-flavors-recipes.git``)
+- ``galaxy_flavors_url:``github repository containing flavors (default: ``https://github.com/pmandreoli/Galaxy-flavours``)
  
-- ``galaxy_flavors_recipes_tag:`` repository branch name (default ``test``)
+- ``galaxy_flavors_tag:`` repository branch name (default ``test``)
  
-- ``galaxy_tools_base_dir:`` directory used to store galaxy flavors recipes (default: ``/data``)
+- ``galaxy_tools_base_dir:`` directory used to store galaxy flavors YAML files (default: ``/data``)
  
-- ``galaxy_flavors_recipes_dir:``  directory to clone the repo in (default: ``'{{ galaxy_tools_base_dir }}/Galaxy-flavors-recipes'``)
+- ``galaxy_flavors_dir:``  directory to clone the repo in (default: ``'{{ galaxy_tools_base_dir }}/Galaxy-flavours'``)
  
 - ``galaxy_flavor:`` galaxy-testing galaxy flavor to install (default: ``galaxy-minimal``)
  
