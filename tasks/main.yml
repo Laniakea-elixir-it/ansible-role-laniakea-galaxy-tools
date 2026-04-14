@@ -8,8 +8,6 @@
 
 - name: Install tools
   import_tasks: tools.yml
-  listen: "restart galaxy"
 
 - name: Install workflows
   import_tasks: workflows.yml
-  listen: "restart galaxy"
