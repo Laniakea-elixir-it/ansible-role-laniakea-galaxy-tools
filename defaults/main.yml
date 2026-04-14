@@ -20,7 +20,7 @@ galaxy_flavor: galaxy-minimal
 laniakea_galaxy_user: {name: galaxy, shell: /bin/bash, uid: 5001}
 
 # Galaxy nginx prefix
-galaxy_prot: 80
+galaxy_port: 80
 galaxy_prefix: "/galaxy/" 
 
 #______________________________________
