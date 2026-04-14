@@ -16,3 +16,4 @@
       workflow-install -a "{{ GALAXY_ADMIN_API_KEY }}" -w '{{ workflows.stat.path }}/' -g "http://localhost{{ galaxy_prefix }}" --publish_workflows
     executable: /bin/bash
   when: workflows.stat.exists == True
+  notify: "restart galaxy"

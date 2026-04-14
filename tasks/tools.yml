@@ -26,6 +26,7 @@
   until: installation.rc == 0
   ignore_errors: true
   when: not role_debug
+  notify: "restart galaxy"
 
 - name: '[DEBUG] Install flavor tools with ephemeris running with custom script'
   become: true 
@@ -39,3 +40,4 @@
   register: installation
   until: installation.rc == 0
   when: role_debug
+  notify: "restart galaxy"
