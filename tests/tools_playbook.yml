@@ -3,6 +3,6 @@
   vars:
     galaxy_flavor: galaxy-testing
     role_debug: true
-    galaxy_prefix: ":80"
+    galaxy_prefix: "/galaxy"
   roles:
     - ../../ansible-role-laniakea-galaxy-tools
