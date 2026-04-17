@@ -31,3 +31,11 @@
   when: not tool_dir_path.stat.exists|bool
   become_user: root
   become_method: sudo
+
+- name: Change ownership of Galaxy flavor directory
+  file:
+    path: '{{ galaxy_flavors_dir }}'
+    owner: galaxy
+    group: galaxy
+    recurse: yes
+  when: not tool_dir_path.stat.exists|bool
