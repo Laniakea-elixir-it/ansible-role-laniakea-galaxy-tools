@@ -34,7 +34,7 @@ galaxy_bootstrap_email: "galaxy_bootstrap@server.com"
 # Galaxy path
 
 # Directory used to store galaxy flavors
-galaxy_tools_base_dir: /data
+galaxy_tools_base_dir: /tmp
 
 # Galaxy config dir
 laniakea_galaxy_config_dir: /home/galaxy/galaxy/config
