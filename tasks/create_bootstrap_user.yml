@@ -1,9 +1,8 @@
 ---
-#
-# If this is a live deployment GALAXY_ADMIN_API_KEY is set son no admin is created.
+# If this is a live deployment GALAXY_ADMIN_API_KEY is set son no admin is created,
+# galaxy is running and it is done on gunicorn sock, not on tcp port.
 # If this is a flavor build deployment GALAXY_ADMIN_API_KEY is not set. So a bootstrap user is created and
 # finally discharged.
-#
 
 - name: Query database for user API_KEY 
   become: true
@@ -27,9 +26,7 @@
   debug:
     msg: '{{ result.query_result[0].exists }}'
 
-#
 ### Create Galaxy bootstrap user
-#
 
 - name: Download user creation script 
   get_url:
@@ -80,3 +77,4 @@
     host: 127.0.0.1
     port: "4001"
     timeout: 300
+  when: result.failed or not result.query_result[0].exists
