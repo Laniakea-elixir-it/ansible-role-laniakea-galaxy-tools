@@ -1,6 +1,6 @@
 ---
 - name: Restart galaxy
-  command: "{{ laniakea_galaxy_venv_dir }}/bin/galaxyctl -c {{ laniakea_galaxy_config }} restart"
+  command: "{{ laniakea_galaxy_venv_dir }}/bin/galaxyctl -c {{ laniakea_galaxy_config_file }} restart"
   become_user: root
   become_method: sudo
   listen: "restart galaxy"
