@@ -9,5 +9,5 @@
 - name: Install tools
   import_tasks: tools.yml
 
-#- name: Install workflows
-#  import_tasks: workflows.yml
+- name: Install workflows
+  import_tasks: workflows.yml
